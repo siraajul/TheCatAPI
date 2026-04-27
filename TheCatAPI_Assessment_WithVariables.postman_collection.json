@@ -1,0 +1,364 @@
+{
+  "info": {
+    "name": "TheCatAPI Assessment Collection",
+    "description": "Complete API Testing Assessment for TheCatAPI.com - 12 pre-configured requests with collection variables for API key",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY_HERE",
+      "type": "string",
+      "description": "TheCatAPI API Key - Replace once and use in all authenticated requests"
+    },
+    {
+      "key": "base_url",
+      "value": "https://api.thecatapi.com/v1",
+      "type": "string",
+      "description": "Base URL for TheCatAPI"
+    }
+  ],
+  "item": [
+    {
+      "name": "PART B - Test Case Design",
+      "item": [
+        {
+          "name": "Q4 - GET - Search JPG images with limit 2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/images/search?limit=2&mime_types=jpg",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "images",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "2"
+                },
+                {
+                  "key": "mime_types",
+                  "value": "jpg"
+                }
+              ]
+            },
+            "description": "Q4: Test Case - Search for cat images with JPG format and limit of 2\nExpected: 200 status, 2 JPG images returned"
+          }
+        },
+        {
+          "name": "Q5 - GET - Search invalid breed (Negative Test)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/breeds/search?q=abcxyz",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "breeds",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "abcxyz"
+                }
+              ]
+            },
+            "description": "Q5: Negative Test Case - Search for non-existent breed\nExpected: 200 status with empty array or 404"
+          }
+        },
+        {
+          "name": "Q6a - GET - Get image ID for favorite",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/images/search?limit=1",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "images",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Q6a: Helper request - Get a valid image_id to use for adding favorite\nStep 1 of Q6"
+          }
+        },
+        {
+          "name": "Q6b - POST - Add cat image to favorites",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image_id\": \"PASTE_IMAGE_ID_FROM_Q6a_HERE\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/favourites",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "favourites"
+              ]
+            },
+            "description": "Q6b: Test Case - Add a cat image to favorites using valid image_id\nRequired: Uses {{api_key}} collection variable\nBody: image_id from Q6a response"
+          }
+        },
+        {
+          "name": "Q7a - GET - Get favorite ID to delete",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/favourites",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "favourites"
+              ]
+            },
+            "description": "Q7a: Helper request - Get list of favorites to find favourite_id\nUses {{api_key}} collection variable\nStep 1 of Q7"
+          }
+        },
+        {
+          "name": "Q7b - DELETE - Delete favorite image",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/favourites/PASTE_FAVOURITE_ID_HERE",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "favourites",
+                "PASTE_FAVOURITE_ID_HERE"
+              ]
+            },
+            "description": "Q7b: Test Case - Delete a favorite using favourite_id from Q7a\nUses {{api_key}} collection variable"
+          }
+        }
+      ]
+    },
+    {
+      "name": "PART C - Execution & Output",
+      "item": [
+        {
+          "name": "Q8 - GET - Search Siberian breed",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/breeds/search?q=sib",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "breeds",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sib"
+                }
+              ]
+            },
+            "description": "Q8: Execution - Search for breeds matching 'sib' (should return Siberian)\nAnalyze: Response structure, fields, status code"
+          }
+        },
+        {
+          "name": "Q9a - GET - Get image for voting",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/images/search?limit=1",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "images",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Q9a: Helper request - Get a valid image_id for voting\nStep 1 of Q9"
+          }
+        },
+        {
+          "name": "Q9b - POST - Vote for cat image (value=1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image_id\": \"PASTE_IMAGE_ID_FROM_Q9a_HERE\",\n  \"value\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/votes",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "votes"
+              ]
+            },
+            "description": "Q9b: Execution - Vote for a cat image with value=1 (like/upvote)\nUses {{api_key}} collection variable\nBody: image_id from Q9a response, value: 1"
+          }
+        },
+        {
+          "name": "Q10 - GET - Search GIF images with limit 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/images/search?mime_types=gif&limit=1",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "images",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "mime_types",
+                  "value": "gif"
+                },
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Q10: Execution - Search for GIF images with limit of 1\nValidation: Response contains 1 GIF, URL ends with .gif"
+          }
+        },
+        {
+          "name": "Q11 - GET - Test invalid limit parameter (1000)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/images/search?limit=1000",
+              "protocol": "https",
+              "host": [
+                "api",
+                "thecatapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "images",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1000"
+                }
+              ]
+            },
+            "description": "Q11: Boundary Testing - Test invalid limit value (1000)\nAnalyze: Status code, response length, API validation logic"
+          }
+        }
+      ]
+    }
+  ]
+}
